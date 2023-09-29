@@ -7,6 +7,7 @@ int main(){
 GameScreen currentScreen = GameScreen::MENU;
  int screenwidth = 850;
  int screenHeight = 450;
+
  InitWindow(screenwidth, screenHeight, "Ekikaran");
  
  ToggleFullscreen();

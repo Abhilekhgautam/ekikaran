@@ -15,8 +15,12 @@ GameScreen currentScreen = GameScreen::MENU;
  int screenwidth = GetScreenWidth();
  int screenHeight = GetScreenHeight();
 
- InitWindow(screenwidth, screenHeight, "Ekikaran");
- 
+ InitWindow(screenwidth, screenHeight, "Ekikaran");\
+
+ bool IsHoveredNew = false;
+ bool IsHoveredSetting = false;
+ bool IsHoveredQuit = false;
+
 // ToggleFullscreen();
  InitAudioDevice(); // initalize audio device
  auto  bgmMusic = LoadMusicStream("resources/coin.wav");
@@ -42,15 +46,44 @@ GameScreen currentScreen = GameScreen::MENU;
  while(!WindowShouldClose()){
   // UpdateMusicStream(bgmMusic);
    UpdateMusicStream(BackgroundMusic);
+   IsHoveredNew = CheckCollisionPointRec(GetMousePosition(),(Rectangle){(GetScreenWidth()/2-65),(GetScreenHeight()/2-165),190,50});
+   IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(),(Rectangle){(GetScreenWidth()/2-65),(GetScreenHeight()/2-15),190,50});
+   IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(),(Rectangle){(GetScreenWidth()/2-65),(GetScreenHeight()/2+135),190,50});
+   
+   
    BeginDrawing();
     ClearBackground(WHITE);
     // LoadMenu(FirstBackgroundImage);
     DrawTexture(FirstBackgroundTexture,0,0,WHITE); //Draw Background
-    DrawTexture(NewGameButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2-200),WHITE);
-    // DrawTexture(SettingButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2-50),WHITE);
-    DrawTexture(QuitButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2+100),WHITE);
+    if(IsHoveredNew){
+      DrawTexture(QuitButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2-200),WHITE);
+      if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+        currentScreen = GameScreen::CONV;
+      }
+    }else{
+      DrawTexture(NewGameButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2-200),WHITE);
+    }
+    if(IsHoveredSetting){
+      DrawTexture(QuitButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2-50),WHITE);
+      if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+        currentScreen = GameScreen::CONV;
+      }
+    }else{
+      DrawTexture(NewGameButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2-50),WHITE);
+    }
+    if(IsHoveredQuit){
+      DrawTexture(NewGameButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2+100),WHITE);
+      if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+        currentScreen = GameScreen::CONV;
+      }
+    }else{
+      DrawTexture(QuitButton,(GetScreenWidth()/2-100),(GetScreenHeight()/2+100),WHITE);
+    }
 
    EndDrawing();
+  //  if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+  //   vector2 MousePosition = GetMouse
+  //  }
  }
  //UnloadMusicStream(bgmMusic);
  UnloadMusicStream(BackgroundMusic);

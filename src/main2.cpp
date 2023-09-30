@@ -128,13 +128,13 @@ int main(void)
     auto strategyText23 = "d xh'nfO{ g}/f; agf}b}g";
 
     auto strategyText31 = "xdL k}nf xfg{' sf] /x:o";
-    auto strategyText32 = ";]gf ;';lHht gfx'g' xf] .";
-    auto strategyText33 = "/ lrd]sL d'n'ssf]";
+    auto strategyText32 = "xd|f] ;]gf ;';lHht gx'g' xf],";
+    auto strategyText33 = "/ l5d]sL d'n'ssf]";
     auto strategyText34 = ";fy gfx'g' xf] .";
 
     auto strategyText41 = "r]tgf eof dnfO{ a9fdxf/h .";
     auto strategyText42 = "d ;]gf tof/ uGo{f 5'";
-    auto strategyText43 = "/ lrd]sL d'n's ;Ë";
+    auto strategyText43 = "/ l5d]sL d'n's ;Ë";
     auto strategyText44 = "aft{nfa klg uGo{f  5'";
 
     // initialization for base
@@ -235,7 +235,7 @@ int main(void)
 
             // LoadMenu(FirstBackgroundImage);
             DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
-            if (exitWindowRequested)0
+            if (exitWindowRequested)
             {
                 DrawRectangle(50, 150, GetScreenWidth() - 100.0, 80.0, Fade(BLACK, 0.8));
                 DrawText("Are you sure you want to exit program? [Y/N]", 65, 160, 50, WHITE);

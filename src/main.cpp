@@ -2,13 +2,6 @@
 
 enum GameScreen{MENU, CONV, BASE};
 
-// int LoadMenu(Image &image){
-//   ImageResize(&image,GetScreenWidth(),GetScreenHeight());
-//   auto BackgroundTexture = LoadTextureFromImage(image);
-//   DrawTexture(BackgroundTexture,0,0,WHITE);
-//   return 0;
-// }
-
 int main(){
 
 GameScreen currentScreen = GameScreen::MENU;
@@ -116,5 +109,5 @@ GameScreen currentScreen = GameScreen::MENU;
  CloseAudioDevice();     // Close audio context
  CloseWindow();
 
- return 0;	
+ return 0;
 }

@@ -2,6 +2,12 @@
 
 enum GameScreen{MENU, CONV, BASE};
 
+// displays Base camp
+void drawBase(){
+ 
+}
+
+
 int main(){
 
 GameScreen currentScreen = GameScreen::MENU;
@@ -96,6 +102,18 @@ auto GroupTroop = LoadTexture("resources/images/characters/grouptroop.png");
     }
     
 
+ auto  bgmMusic = LoadMusicStream("resources/music/scott-buckley-i-walk-with-ghosts(chosic.com).mp3");
+ //auto  bgMenu = LoadTexture("resources/images/khukuri.png");
+ auto continueBtn = LoadTexture("resources/Images/continue.png");
+ ToggleFullscreen();
+ SetMusicVolume(bgmMusic, 1.0f);
+ PlayMusicStream(bgmMusic);
+ currentScreen = GameScreen::MENU;
+ while(!WindowShouldClose()){
+   UpdateMusicStream(bgmMusic);	 
+   BeginDrawing();
+    ClearBackground(WHITE);
+    DrawTexture(continueBtn, 50, 200 , WHITE);
    EndDrawing();
   //  if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
   //   vector2 MousePosition = GetMouse

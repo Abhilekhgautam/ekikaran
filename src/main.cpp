@@ -12,6 +12,7 @@ enum GameScreen{MENU, CONV, BASE};
 int main(){
 
 GameScreen currentScreen = GameScreen::MENU;
+
  int screenwidth = GetScreenWidth();
  int screenHeight = GetScreenHeight();
 
@@ -31,19 +32,15 @@ GameScreen currentScreen = GameScreen::MENU;
 
 // ToggleFullscreen();
  InitAudioDevice(); // initalize audio device
-//  auto  bgmMusic = LoadMusicStream("resources/coin.wav");
+
  auto BackgroundMusic = LoadMusicStream("resources/music/WarMusic.mp3");
- 
 
  //Background Load
- auto FirstBackgroundTexture= LoadTexture("resources/images/FirstPage.png");
-//  auto FirstBackgroundImage = LoadImage("resources/images/first_background.png");
- 
+ auto FirstBackgroundTexture= LoadTexture("resources/images/first_background.png");
  //Button Load
  auto NewBefore = LoadTexture("resources/ButtonImages/NewGameBefore.png");
  auto SettingBefore = LoadTexture("resources/ButtonImages/SettingBefore.png");
  auto QuitBefore = LoadTexture("resources/ButtonImages/QuitBefore.png");
-
  auto NewAfter = LoadTexture("resources/ButtonImages/NewGameAfter.png");
  auto SettingAfter = LoadTexture("resources/ButtonImages/SettingAfter.png");
  auto QuitAfter = LoadTexture("resources/ButtonImages/QuitAfter.png");
@@ -54,10 +51,6 @@ GameScreen currentScreen = GameScreen::MENU;
  SetMusicVolume(BackgroundMusic,1.0f);
  PlayMusicStream(BackgroundMusic);
 
- //SetMusicVolume(bgmMusic, 1.0f);
-//  PlayMusicStream(bgmMusic);
-  // UpdateMusicStream(bgmMusic);
-//  currentScreen = GameScreen::MENU;
  while(!exitWindow && !WindowShouldClose() ){
 
   // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
@@ -119,7 +112,6 @@ GameScreen currentScreen = GameScreen::MENU;
  UnloadTexture(NewAfter);
  UnloadTexture(SettingAfter);
  UnloadTexture(QuitBefore);
-
 
  CloseAudioDevice();     // Close audio context
  CloseWindow();

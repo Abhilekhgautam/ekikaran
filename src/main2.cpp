@@ -5,6 +5,7 @@ typedef enum GameScreen
 {
     MENU = 0,
     CONV,
+    READ,
     BASE
 } GameScreen;
 
@@ -33,7 +34,7 @@ int main(void)
 
     // Background Load
     auto FirstBackgroundImage = LoadImage("resources/images/first_background-transformed.png");
-    ImageResize(&FirstBackgroundImage,GetScreenWidth(),GetScreenHeight());
+    ImageResize(&FirstBackgroundImage, GetScreenWidth(), GetScreenHeight());
     auto FirstBackgroundTexture = LoadTextureFromImage(FirstBackgroundImage);
     // auto FirstBackgroundTexture = LoadTexture("resources/images/first_background_clipdrop-enhance.png");
     //  auto FirstBackgroundImage = LoadImage("resources/images/first_background.png");
@@ -83,7 +84,7 @@ int main(void)
         //     case MENU:
         //     {
         //         if(Entered)
-        //         {   
+        //         {
         //             transAlpha+=0.005f;
         //             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
         //             framesCounter1++;    // Count frames
@@ -104,7 +105,7 @@ int main(void)
         //     case CONV:
         //     {
         //         if(Entered)
-        //         {   
+        //         {
         //             transAlpha+=0.005f;
         //             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
         //             framesCounter1++;    // Count frames
@@ -125,7 +126,7 @@ int main(void)
         //     case BASE:
         //     {
         //         if(Entered)
-        //         {   
+        //         {
         //             transAlpha+=0.005f;
         //             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
         //             framesCounter1++;    // Count frames
@@ -146,7 +147,7 @@ int main(void)
         //     default:
         //         break;
         // }
-        
+
         BeginDrawing();
 
         ClearBackground(WHITE);
@@ -156,80 +157,75 @@ int main(void)
         case MENU:
         {
             // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
-        if (exitWindowRequested)
-        {
-            if (IsKeyPressed(KEY_Y))
-                exitWindow = true;
-            else if (IsKeyPressed(KEY_N))
-                exitWindowRequested = false;
-        }
-        UpdateMusicStream(bgmMusic);
-        IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
-        IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
-        IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
+            if (exitWindowRequested)
+            {
+                if (IsKeyPressed(KEY_Y))
+                    exitWindow = true;
+                else if (IsKeyPressed(KEY_N))
+                    exitWindowRequested = false;
+            }
+            UpdateMusicStream(bgmMusic);
+            IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
+            IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
+            IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
 
-        // LoadMenu(FirstBackgroundImage);
-        DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
-        if (exitWindowRequested)
-        {
-            DrawRectangle(50, 150, GetScreenWidth()-100.0,80.0, Fade(GREEN,0.8));
-            DrawText("Are you sure you want to exit program? [Y/N]", 65, 160, 50, WHITE);
-        }
-        if (IsHoveredNew)
-        {
-            DrawTexture(NewAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 240), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            // LoadMenu(FirstBackgroundImage);
+            DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
+            if (exitWindowRequested)
             {
-                Entered = true;
-                transAlpha =0.0f;
+                DrawRectangle(50, 150, GetScreenWidth() - 100.0, 80.0, Fade(GREEN, 0.8));
+                DrawText("Are you sure you want to exit program? [Y/N]", 65, 160, 50, WHITE);
             }
-        }
-        else
-        {
-            DrawTexture(NewBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 200), WHITE);
-        }
-        if (IsHoveredSetting)
-        {
-            DrawTexture(SettingAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 105), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            if (IsHoveredNew)
             {
-                currentScreen = GameScreen::CONV;
+                DrawTexture(NewAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 240), WHITE);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    Entered = true;
+                    transAlpha = 0.0f;
+                }
             }
-        }
-        else
-        {
-            DrawTexture(SettingBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 65), WHITE);
-        }
-        if (IsHoveredQuit)
-        {
-            DrawTexture(QuitAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 + 45), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            else
             {
-                exitWindowRequested = true;
+                DrawTexture(NewBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 200), WHITE);
             }
-        }
-        else
-        {
-            DrawTexture(QuitBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 + 85), WHITE);
-        }
-        if(Entered)
-        {   
-            transAlpha+=0.005f;
-            DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-            framesCounter1++;    // Count frames
-            if (framesCounter1 > 105)
+            if (IsHoveredSetting)
             {
-                Entered = false;
-                framesCounter1 = 0;
-                transAlpha = 0.0f;
-                currentScreen = CONV;
+                DrawTexture(SettingAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 105), WHITE);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    currentScreen = GameScreen::CONV;
+                }
             }
-        }
-        // if (IsKeyPressed(KEY_ENTER))
-        // {
-        //     Entered = true;
-        // }
-
+            else
+            {
+                DrawTexture(SettingBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 65), WHITE);
+            }
+            if (IsHoveredQuit)
+            {
+                DrawTexture(QuitAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 + 45), WHITE);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    exitWindowRequested = true;
+                }
+            }
+            else
+            {
+                DrawTexture(QuitBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 + 85), WHITE);
+            }
+            if (Entered)
+            {
+                transAlpha += 0.005f;
+                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                framesCounter1++; // Count frames
+                if (framesCounter1 > 105)
+                {
+                    Entered = false;
+                    framesCounter1 = 0;
+                    transAlpha = 0.0f;
+                    currentScreen = CONV;
+                }
+            }
         }
         break;
 
@@ -251,17 +247,41 @@ int main(void)
             DrawTexture(speechTextureForSon, 650, 350, WHITE);
             DrawTextPro(font, TextSubtext(fatherText, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 20, 2.0, BLACK);
             DrawTextPro(font, TextSubtext(sonText, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 20, 2.0, BLACK);
-        
+
             if (IsKeyPressed(KEY_ENTER))
             {
                 Entered = true;
-                transAlpha =0.0f;
+                transAlpha = 0.0f;
             }
-            if(Entered)
-            {   
-                transAlpha+=0.005f;
+            if (Entered)
+            {
+                transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-                framesCounter1++;    // Count frames
+                framesCounter1++; // Count frames
+                if (framesCounter1 > 105)
+                {
+                    Entered = false;
+                    framesCounter1 = 0;
+                    transAlpha = 0.0f;
+                    currentScreen = READ;
+                }
+            }
+        }
+        break;
+
+        case READ:
+        {
+            DrawTexture(skyTexture,0,0,WHITE);
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                Entered = true;
+                transAlpha = 0.0f;
+            }
+            if (Entered)
+            {
+                transAlpha += 0.005f;
+                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                framesCounter1++; // Count frames
                 if (framesCounter1 > 105)
                 {
                     Entered = false;
@@ -271,18 +291,17 @@ int main(void)
                 }
             }
 
-
         }
         break;
 
         case BASE:
         {
             DrawTexture(baseTexture, 0, 0, WHITE);
-            if(Entered)
-            {   
-                transAlpha+=0.005f;
+            if (Entered)
+            {
+                transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-                framesCounter1++;    // Count frames
+                framesCounter1++; // Count frames
                 if (framesCounter1 > 105)
                 {
                     Entered = false;
@@ -294,9 +313,8 @@ int main(void)
             if (IsKeyPressed(KEY_ENTER))
             {
                 Entered = true;
-                transAlpha =0.0f;
+                transAlpha = 0.0f;
             }
-
         }
         break;
         default:

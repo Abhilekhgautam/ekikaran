@@ -35,10 +35,10 @@ class Base{
     // we will always start with tiles and castle so add them to the vector initally
 
     // add tiles to the vector
-     for(int i = -30 ; i <= height ; i += 15){
-        for(int j = -60; j <= width ; j += 10){
+     for(int i = -30 ; i <= height ; i += 64){
+        for(int j = -60; j <= width ; j += 64){
 	   Tile tile;
-	   tile.texture = LoadTexture("./resources/tile-opponent.png");
+	   tile.texture = LoadTexture("./resources/images/diagonal-grass.png");
 	   tile.x = j;
 	   tile.y = i;
 	   tile.isDraggable = false;
@@ -51,7 +51,7 @@ class Base{
 
 
     BaseItem castle;
-    castle.texture= LoadTexture("./resources/opponent-castle.png");
+    castle.texture= LoadTexture("./resources/images/Nuwakot.png");
     castle.x = (int)GetScreenWidth() / 2;
     castle.y = (int)GetScreenHeight() / 2 - 150;
     castle.isDraggable = true;
@@ -62,7 +62,7 @@ class Base{
    
     BaseItem camp;
     camp.texture = LoadTexture("./resources/army-camp.png");
-    camp.x = 400;
+    camp.x = 700;
     camp.y = 50;
     camp.isDraggable = true;
     camp.isObstacle = true;
@@ -94,7 +94,7 @@ class Base{
 
 
     BaseItem horse;
-    horse.texture = LoadTexture("./resources/horse.png");
+    horse.texture = LoadTexture("./resources/horse-opponent.png");
     horse.x = 300;
     horse.y = 300;
     horse.isDraggable = true;
@@ -102,7 +102,7 @@ class Base{
     items.emplace_back(horse);
 
     BaseItem dhunga;
-    dhunga.texture = LoadTexture("./resources/dhunga.png");
+    dhunga.texture = LoadTexture("./resources/large-stone.png");
     dhunga.x = 50;
     dhunga.y = 60;
     dhunga.isDraggable = true;
@@ -110,7 +110,7 @@ class Base{
     items.emplace_back(dhunga);
 
     BaseItem fallenWood;
-    fallenWood.texture = LoadTexture("./resources/fallen-wood.png");
+    fallenWood.texture = LoadTexture("./resources/large-trunk.png");
     fallenWood.x = 490;
     fallenWood.y = 300;
     fallenWood.isDraggable = true;
@@ -127,7 +127,7 @@ class Base{
 
     BaseItem army;
     army.texture = LoadTexture("./resources/troops.png");
-    army.x = 100;
+    army.x = 300;
     army.y = 100;
     army.isDraggable = true;
     army.isObstacle = true;
@@ -143,8 +143,6 @@ class Base{
     */
    }
    std::vector<BaseItem> items;	 
-   void update(){}
-   void refresh(){}
    void draw(){
      for(auto& elt: items){
 	      elt.draw();

@@ -1,11 +1,13 @@
 
 #include "raylib.h"
+#include <cstring>
 
 typedef enum GameScreen
 {
     MENU = 0,
     CONV,
     STRATEGY,
+    READ,
     BASE
 } GameScreen;
 
@@ -36,8 +38,7 @@ int main(void)
     auto FirstBackgroundImage = LoadImage("resources/images/first_background-transformed.png");
     ImageResize(&FirstBackgroundImage, GetScreenWidth(), GetScreenHeight());
     auto FirstBackgroundTexture = LoadTextureFromImage(FirstBackgroundImage);
-    // auto FirstBackgroundTexture = LoadTexture("resources/images/first_background_clipdrop-enhance.png");
-    //  auto FirstBackgroundImage = LoadImage("resources/images/first_background.png");
+    UnloadImage(FirstBackgroundImage);
 
     // Button Load
     auto NewBefore = LoadTexture("resources/ButtonImages/NewGameBefore.png");
@@ -137,81 +138,39 @@ int main(void)
     auto strategyText43 = "/ l5d]sL d'n's ;Ë";
     auto strategyText44 = "aft{nfa klg uGo{f  5'";
 
+    // initialization for read
+    bool isFather = false;
+    // Load text File
+    //  const char *text = LoadFileText("resources/conversation.txt");
+    // const char text[] = "This sample illustrates a text writing\nanimation effect! Check it out!";
+    const char text[] = R"(#)) aif{ klxnf g]kfn eg]/ sf7df8f}+ pkTosnfO{ lrGg] ul/GYof] c? ;a} 8f]6L,s}nfnL ,g'jfsf]6 h:tf 7'nf 7'nf /fHo lyP eg] c? ;-;fgf /fHo lyP .
+t]; k5L uf]v{f Ps ;gf] /fHo df Ps dxg of]w sf] hGd x'G5 h:nfO{ xfdL k[lyjL gf/fo0ff ifx eg]/ lrGg] ur{f} .
+pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjLgf/fo0f lgs} dxTjfsf+IfL /fhf lyP. 
+ uf]v{f cfqmd0f;Fu} uf]v{f ;]gfaf6 hf]ufpg rfxGy], To;}n] ;fgf ;fgf /fHox¿nfO{ PsLs/0f u/]/ Pp6} b]z agfpg yfn] . /fhf ag]sf] Ps jif{kl5 ;G 
+ !&$$ df pgn] g'jfsf]6df cfqmd0f u/] t/ uf]/vf ;]gf /fd|f];Fu ;';lHht gePsf] sf/0fn] kl5 x6\of] .To;kl5 zfxn] sfn' kf08]nfO{ cfkm\gf] /fHosf] “d'nsfhL” 
+ agfP / o;/L cfkm\gf] 3/]n' /fhgLlts l:ylt alnof] agfP./fhf cfqmd0f cleofgdf uPsf a]nf l5d]sL /fhfx¿n] uf]/vfdf cfqmd0f ug{ ;S5G eGg] 8/ lyof] . 
+ o;/L k[YjLn] sfn' kf08]nfO{ ndh'ªsf /fhf;Fu jft{f ug{ k7fP . sfn' kf08]n] ndh'ªsf /fhf;Fu r]k] gbLsf] a]l;gdf ;f}xfb{k"0f{ s'/fsfgL u/]sf lyP . 
+ b'O{ k/Dk/fut zT? uf]/vf / ndh'ªaLr u7aGwg agfpg sfn' kf08]sf] s"6gLlt ;kmn eof] . To;kl5 uf]/vfn] sf:sL, tgx'F / kfn\kf;Fu u7aGwg u/] . 
+ nueu Ps jif{ kl5, @ cS6f]a/ !&$$ df, pgn] g'jfsf]6nfO{ km]l/ cfqmd0f u/] / lht]/ cfkm\gf] uf]/vf /fHosf] l;dfgf lj:tf/ u/].)";
+    // const char text[] = MyString;
+    // auto textLength = TextLength(text);
+    // const char *line = strtok((char *)text, "\n");
+
     // initialization for base
     auto baseTexture = LoadTexture("resources/images/villagehouse.png");
 
     // Main game loop
     while (!exitWindow && !WindowShouldClose()) // Detect window close button or ESC key
     {
-        textCounter +=3 ;
-        // switch (currentScreen)
-        // {
-        //     case MENU:
-        //     {
-        //         if(Entered)
-        //         {
-        //             transAlpha+=0.005f;
-        //             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-        //             framesCounter1++;    // Count frames
-        //             if (framesCounter1 > 90)
-        //             {
-        //                 Entered = false;
-        //                 framesCounter1 = 0;
-        //                 transAlpha = 0.0f;
-        //                 currentScreen = CONV;
-        //             }
-        //         }
-        //         if (IsKeyPressed(KEY_ENTER))
-        //         {
-        //             Entered = true;
-        //         }
-        //     }
-        //     break;
-        //     case CONV:
-        //     {
-        //         if(Entered)
-        //         {
-        //             transAlpha+=0.005f;
-        //             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-        //             framesCounter1++;    // Count frames
-        //             if (framesCounter1 > 90)
-        //             {
-        //                 Entered = false;
-        //                 framesCounter1 = 0;
-        //                 transAlpha = 0.0f;
-        //                 currentScreen = BASE;
-        //             }
-        //         }
-        //         if (IsKeyPressed(KEY_ENTER))
-        //         {
-        //             Entered = true;
-        //         }
-        //     }
-        //     break;
-        //     case BASE:
-        //     {
-        //         if(Entered)
-        //         {
-        //             transAlpha+=0.005f;
-        //             DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-        //             framesCounter1++;    // Count frames
-        //             if (framesCounter1 > 90)
-        //             {
-        //                 Entered = false;
-        //                 framesCounter1 = 0;
-        //                 transAlpha = 0.0f;
-        //                 currentScreen = MENU;
-        //             }
-        //         }
-        //         if (IsKeyPressed(KEY_ENTER))
-        //         {
-        //             Entered = true;
-        //         }
-        //     }
-        //     break;
-        //     default:
-        //         break;
-        // }
+        // textCounter += 3;
+        if (IsKeyDown(KEY_SPACE))
+            framesCounter += 8;
+        else
+            framesCounter++;
+
+        if (IsKeyPressed(KEY_ENTER))
+            framesCounter = 0;
+        textCounter++;
 
         BeginDrawing();
 
@@ -221,6 +180,7 @@ int main(void)
         {
         case MENU:
         {
+            // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
             if (exitWindowRequested)
             {
                 if (IsKeyPressed(KEY_Y))
@@ -277,7 +237,6 @@ int main(void)
             {
                 DrawTexture(QuitBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 + 85), WHITE);
             }
-
             if (Entered)
             {
                 transAlpha += 0.005f;
@@ -297,20 +256,8 @@ int main(void)
 
         case CONV:
         {
-            if (IsKeyDown(KEY_SPACE))
-                framesCounter += 8;
-            else
-                framesCounter++;
-
             if (IsKeyPressed(KEY_ENTER))
                 Entered = true;
-            // if (IsKeyPressed(KEY_SPACE))
-            //     framesCounter = 0;
-
-            // if (IsKeyPressed(KEY_ENTER))
-            // {
-            //     Entered = false;
-            // }
             UpdateMusicStream(bgmMusic);
             DrawTexture(skyTexture, 0, 0, WHITE);
             DrawTexture(houseTexture, 0, 0, WHITE);
@@ -320,24 +267,19 @@ int main(void)
             DrawTexture(speechTextureForDaughter, 740, 350, WHITE);
             if (textCounter < 400)
             {
-                // DrawTextPro(font, TextSubtext(text1, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText1, {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 400 && textCounter < 800)
             {
-                // DrawTextPro(font, TextSubtext(text2, 0, framesCounter / 40), {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText2, {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 800 && textCounter < 1200)
             {
-                // DrawTextPro(font, TextSubtext(text3, 0, framesCounter / 80), {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text3, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText3, {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 1200 && textCounter < 1800)
             {
-                // DrawTextPro(font, TextSubtext(text41, 0, framesCounter / 60), {850, 400}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text42, 0, framesCounter / 60), {850, 425}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text43, 0, framesCounter / 60), {850, 450}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText41, {850, 400}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText42, {850, 425}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText43, {850, 450}, {0, 0}, 0, 25, 1.0, BLACK);
@@ -347,53 +289,69 @@ int main(void)
                 DrawTextPro(font, convText51, {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText52, {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText53, {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text51, 0, framesCounter / 10), {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text52, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text53, 0, framesCounter / 10), {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
             }
             else if (textCounter > 2400 && textCounter < 2800)
             {
                 DrawTextPro(font, convText6, {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text6, 0, framesCounter / 10), {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 2800 && textCounter < 3200)
             {
                 DrawTextPro(font, convText71, {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText72, {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text71, 0, framesCounter / 10), {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text72, 0, framesCounter / 10), {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 3200 && textCounter < 3600)
             {
                 DrawTextPro(font, convText73, {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText74, {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text73, 0, framesCounter / 10), {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text74, 0, framesCounter / 10), {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 3600 && textCounter < 4000)
             {
                 DrawTextPro(font, convText81, {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText82, {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text81, 0, framesCounter / 10), {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text82, 0, framesCounter / 10), {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else if (textCounter > 4000 && textCounter < 4400)
             {
                 DrawTextPro(font, convText83, {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
                 DrawTextPro(font, convText84, {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text83, 0, framesCounter / 10), {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text84, 0, framesCounter / 10), {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else
             {
                 DrawTextPro(font, convText91, {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText92, {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
                 DrawTextPro(font, convText93, {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text91, 0, framesCounter / 10), {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text92, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
-                // DrawTextPro(font, TextSubtext(text93, 0, framesCounter / 10), {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
             }
 
+            if (Entered)
+            {
+                transAlpha += 0.005f;
+                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                framesCounter1++; // Count frames
+                if (framesCounter1 > 105)
+                {
+                    Entered = false;
+                    framesCounter1 = 0;
+                    transAlpha = 0.0f;
+                    currentScreen = READ;
+                }
+            }
+        }
+        break;
+
+        case READ:
+        {
+            DrawTexture(skyTexture, 0, 0, WHITE);
+
+            // DrawText(TextSubtext(text, 0, framesCounter / 10), 210, 190, 20, BLACK);
+            DrawTextPro(font, TextSubtext(text, 0, framesCounter / 10),{10, 190},{0,0},0, 25,1.0, BLACK);
+
+            // DrawText(TextSubtext(text, 0, framesCounter/30), 210, 2200, 20, BLACK);
+            // DrawText(TextSubtext(text, 0, framesCounter/40), 210, 250, 20, BLACK);
+
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                Entered = true;
+                transAlpha = 0.0f;
+            }
             if (Entered)
             {
                 transAlpha += 0.005f;

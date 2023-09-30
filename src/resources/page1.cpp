@@ -14,6 +14,8 @@ int main()
     Texture2D backgroundTexture = LoadTextureFromImage(backgroundImage);
     UnloadImage(backgroundImage);
 
+    Font font = LoadFont("resources/preeti.otf");
+
     // Set the frames-per-second
     SetTargetFPS(60);
 

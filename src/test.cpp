@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <cstring>
+
 class BaseItem: public Rectangle{
   public:
     bool isDraggable;
@@ -34,20 +35,23 @@ class Base{
     // we will always start with tiles and castle so add them to the vector initally
 
     // add tiles to the vector
-    for(int i = -30 ; i <= height ; i += 45){
-       for(int j = -60; j <= width ; j += 60){
-	  Tile tile;
-	  tile.texture = LoadTexture("./resources/images/diagonal-grass.png");
-	  tile.x = j;
-	  tile.y = i;
-	  tile.isDraggable = false;
-	  tile.isObstacle = false;
-          items.emplace_back(tile);
-       }	    
-    }
+     for(int i = -30 ; i <= height ; i += 45){
+        for(int j = -60; j <= width ; j += 40){
+	   Tile tile;
+	   tile.texture = LoadTexture("./resources/images/diagonal-grass.png");
+	   tile.x = j;
+	   tile.y = i;
+	   tile.isDraggable = false;
+	   tile.isObstacle = false;
+           items.emplace_back(tile);
+        }	    
+     }
     // we will add a castle at the center of the the base 
+
+
+
     BaseItem castle;
-    castle.texture= LoadTexture("./resources/images/townhall.png");
+    castle.texture= LoadTexture("./resources/images/GorkhaMuseum1.png");
     castle.x = (int)GetScreenWidth() / 2;
     castle.y = (int)GetScreenHeight() / 2 - 150;
     castle.isDraggable = true;
@@ -55,6 +59,28 @@ class Base{
     items.emplace_back(castle);
     castle.width = castle.texture.width;
     castle.height = castle.texture.height;
+   
+    BaseItem camp;
+    camp.texture = LoadTexture("./resources/army-camp.png");
+    camp.x = 400;
+    camp.y = 50;
+    camp.isDraggable = true;
+    camp.isObstacle = true;
+    items.emplace_back(camp);
+    /*
+    for(int i = 200 ; i <= height / 2 + 50 ; i += 20){
+      for(int j = 630 ; j <= width / 2 + 200 ; j += 20){
+        BaseItem walls;
+	walls.texture = LoadTexture("./resources/wooden-wall.png");
+	walls.x = j;
+	walls.y = i;
+	walls.isDraggable = false;
+	walls.isObstacle = true;
+	items.emplace_back(walls);
+      }	    
+    }
+    */
+    
 
     BaseItem mediumTree;
     mediumTree.texture = LoadTexture("./resources/images/medum-tree.png");
@@ -65,6 +91,47 @@ class Base{
     mediumTree.width = mediumTree.texture.width;
     mediumTree.height = mediumTree.texture.height;
     items.emplace_back(mediumTree);
+
+
+    BaseItem horse;
+    horse.texture = LoadTexture("./resources/horse.png");
+    horse.x = 300;
+    horse.y = 300;
+    horse.isDraggable = true;
+    horse.isObstacle = true;
+    items.emplace_back(horse);
+
+    BaseItem dhunga;
+    dhunga.texture = LoadTexture("./resources/dhunga.png");
+    dhunga.x = 50;
+    dhunga.y = 60;
+    dhunga.isDraggable = true;
+    dhunga.isObstacle = true;
+    items.emplace_back(dhunga);
+
+    BaseItem fallenWood;
+    fallenWood.texture = LoadTexture("./resources/fallen-wood.png");
+    fallenWood.x = 490;
+    fallenWood.y = 300;
+    fallenWood.isDraggable = true;
+    fallenWood.isBeingDragged = true;
+    items.emplace_back(fallenWood);
+
+    BaseItem obDhunga;
+    obDhunga.texture = LoadTexture("./resources/obdhunga.png");
+    obDhunga.x = 340;
+    obDhunga.y = 650;
+    obDhunga.isDraggable = true;
+    obDhunga.isObstacle = true;
+    items.emplace_back(obDhunga);
+
+    BaseItem army;
+    army.texture = LoadTexture("./resources/troops.png");
+    army.x = 100;
+    army.y = 100;
+    army.isDraggable = true;
+    army.isObstacle = true;
+    items.emplace_back(army);
 /*
     BaseItem test;
     test.texture = LoadTexture("./resources/images/test.png");

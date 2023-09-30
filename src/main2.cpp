@@ -8,6 +8,12 @@ typedef enum GameScreen
     BASE
 } GameScreen;
 
+void transition()
+{
+    transAlpha += 0.05f;
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+}
+
 int main(void)
 {
     const int screenWidth = GetScreenWidth();
@@ -25,7 +31,7 @@ int main(void)
     bool exitWindow = false;
     bool exitWindowRequested = false;
     float transAlpha = 0.0f;
-     bool IsHoveredNew = false;
+    bool IsHoveredNew = false;
     bool IsHoveredSetting = false;
     bool IsHoveredQuit = false;
     auto BackgroundMusic = LoadMusicStream("resources/music/WarMusic.mp3");
@@ -72,13 +78,14 @@ int main(void)
     // Main game loop
     while (!exitWindow && !WindowShouldClose()) // Detect window close button or ESC key
     {
+        transAlpha += 0.05f;
         switch (currentScreen)
         {
         case MENU:
         {
             if (IsKeyPressed(KEY_ENTER))
             {
-                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                // DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
                 currentScreen = CONV;
             }
         }
@@ -87,16 +94,25 @@ int main(void)
         {
             if (IsKeyPressed(KEY_ENTER))
             {
-                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                // DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                transAlpha = 0.0f;
+                framesCounter = 0;
                 currentScreen = BASE;
             }
         }
         break;
         case BASE:
         {
+            // framesCounter++;
+            // transAlpha += 0.05f;
+            // if (framesCounter > 120)
+            // {
+            //     currentScreen = MENU;
+            // }
             if (IsKeyPressed(KEY_ENTER))
             {
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                // transition();
                 currentScreen = MENU;
             }
         }
@@ -113,68 +129,72 @@ int main(void)
         case MENU:
         {
             // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
-        if (exitWindowRequested)
-        {
-            if (IsKeyPressed(KEY_Y))
-                exitWindow = true;
-            else if (IsKeyPressed(KEY_N))
-                exitWindowRequested = false;
-        }
-        UpdateMusicStream(BackgroundMusic);
-        IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
-        IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
-        IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
+            if (exitWindowRequested)
+            {
+                if (IsKeyPressed(KEY_Y))
+                    exitWindow = true;
+                else if (IsKeyPressed(KEY_N))
+                    exitWindowRequested = false;
+            }
+            UpdateMusicStream(BackgroundMusic);
+            IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
+            IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
+            IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
 
-        BeginDrawing();
-        ClearBackground(WHITE);
-        // LoadMenu(FirstBackgroundImage);
-        DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
-        if (exitWindowRequested)
-        {
-            DrawRectangle(100, 100, screenWidth, 20, BLACK);
-            DrawText("Are you sure you want to exit program? [Y/N]", 100, 450, 30, WHITE);
-        }
-        if (IsHoveredNew)
-        {
-            DrawTexture(NewAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 240), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
+            if (exitWindowRequested)
             {
-                currentScreen = GameScreen::CONV;
+                DrawRectangle(100, 100, screenWidth, 20, BLACK);
+                DrawText("Are you sure you want to exit program? [Y/N]", 100, 450, 30, WHITE);
             }
-        }
-        else
-        {
-            DrawTexture(NewBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 200), WHITE);
-        }
-        if (IsHoveredSetting)
-        {
-            DrawTexture(SettingAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 105), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            if (IsHoveredNew)
             {
-                currentScreen = GameScreen::CONV;
+                DrawTexture(NewAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 240), WHITE);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    currentScreen = GameScreen::CONV;
+                }
             }
-        }
-        else
-        {
-            DrawTexture(SettingBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 65), WHITE);
-        }
-        if (IsHoveredQuit)
-        {
-            DrawTexture(QuitAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 + 45), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            else
             {
-                exitWindowRequested = true;
+                DrawTexture(NewBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 200), WHITE);
             }
-        }
-        else
-        {
-            DrawTexture(QuitBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 + 85), WHITE);
-        }
+            if (IsHoveredSetting)
+            {
+                DrawTexture(SettingAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 105), WHITE);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    currentScreen = GameScreen::CONV;
+                }
+            }
+            else
+            {
+                DrawTexture(SettingBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 65), WHITE);
+            }
+            if (IsHoveredQuit)
+            {
+                DrawTexture(QuitAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 + 45), WHITE);
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                {
+                    exitWindowRequested = true;
+                }
+            }
+            else
+            {
+                DrawTexture(QuitBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 + 85), WHITE);
+            }
         }
         break;
 
         case CONV:
         {
+            if (IsKeyDown(KEY_SPACE))
+                framesCounter += 8;
+            else
+                framesCounter++;
+
+            if (IsKeyPressed(KEY_ENTER))
+                framesCounter = 0;
             UpdateMusicStream(bgmMusic);
             DrawTexture(skyTexture, 0, 0, WHITE);
             DrawTexture(houseTexture, 0, 0, WHITE);
@@ -185,7 +205,7 @@ int main(void)
             DrawTextPro(font, TextSubtext(fatherText, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 20, 2.0, BLACK);
             DrawTextPro(font, TextSubtext(sonText, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 20, 2.0, BLACK);
         }
-        
+
         break;
         case BASE:
         {
@@ -201,142 +221,3 @@ int main(void)
     CloseWindow();
     return 0;
 }
-
-/*
-#include <raylib.h>
-
-enum GameScreen
-{
-    MENU,
-    CONV,
-    BASE
-};
-
-int main()
-{
-
-    GameScreen currentScreen = GameScreen::MENU;
-    int screenwidth = GetScreenWidth();
-    int screenHeight = GetScreenHeight();
-
-    SetExitKey(KEY_NULL);
-
-    bool exitWindow = false;
-    bool exitWindowRequested = false;
-
-    SetTargetFPS(60);
-
-    InitWindow(screenwidth, screenHeight, "Ekikaran");
-
-    bool IsHoveredNew = false;
-    bool IsHoveredSetting = false;
-    bool IsHoveredQuit = false;
-
-    // ToggleFullscreen();
-    InitAudioDevice(); // initalize audio device
-                       //  auto  bgmMusic = LoadMusicStream("resources/coin.wav");
-    auto BackgroundMusic = LoadMusicStream("resources/music/WarMusic.mp3");
-
-    // Background Load
-    auto FirstBackgroundTexture = LoadTexture("resources/images/FirstPage.png");
-    //  auto FirstBackgroundImage = LoadImage("resources/images/first_background.png");
-
-    // Button Load
-    auto NewBefore = LoadTexture("resources/ButtonImages/NewGameBefore.png");
-    auto SettingBefore = LoadTexture("resources/ButtonImages/SettingBefore.png");
-    auto QuitBefore = LoadTexture("resources/ButtonImages/QuitBefore.png");
-
-    auto NewAfter = LoadTexture("resources/ButtonImages/NewGameAfter.png");
-    auto SettingAfter = LoadTexture("resources/ButtonImages/SettingAfter.png");
-    auto QuitAfter = LoadTexture("resources/ButtonImages/QuitAfter.png");
-
-    SetMusicVolume(BackgroundMusic, 1.0f);
-    PlayMusicStream(BackgroundMusic);
-
-    // SetMusicVolume(bgmMusic, 1.0f);
-    //  PlayMusicStream(bgmMusic);
-    // UpdateMusicStream(bgmMusic);
-    //  currentScreen = GameScreen::MENU;
-    while (!exitWindow && !WindowShouldClose())
-    {
-
-        // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
-        if (exitWindowRequested)
-        {
-            if (IsKeyPressed(KEY_Y))
-                exitWindow = true;
-            else if (IsKeyPressed(KEY_N))
-                exitWindowRequested = false;
-        }
-        UpdateMusicStream(BackgroundMusic);
-        IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
-        IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
-        IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
-
-        BeginDrawing();
-        ClearBackground(WHITE);
-        // LoadMenu(FirstBackgroundImage);
-        DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
-        if (exitWindowRequested)
-        {
-            DrawRectangle(100, 100, screenwidth, 20, BLACK);
-            DrawText("Are you sure you want to exit program? [Y/N]", 100, 450, 30, WHITE);
-        }
-        if (IsHoveredNew)
-        {
-            DrawTexture(NewAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 240), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            {
-                currentScreen = GameScreen::CONV;
-            }
-        }
-        else
-        {
-            DrawTexture(NewBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 200), WHITE);
-        }
-        if (IsHoveredSetting)
-        {
-            DrawTexture(SettingAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 - 105), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            {
-                currentScreen = GameScreen::CONV;
-            }
-        }
-        else
-        {
-            DrawTexture(SettingBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 - 65), WHITE);
-        }
-        if (IsHoveredQuit)
-        {
-            DrawTexture(QuitAfter, (GetScreenWidth() / 2 - 120), (GetScreenHeight() / 2 + 45), WHITE);
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            {
-                exitWindowRequested = true;
-            }
-        }
-        else
-        {
-            DrawTexture(QuitBefore, (GetScreenWidth() / 2 - 100), (GetScreenHeight() / 2 + 85), WHITE);
-        }
-
-        EndDrawing();
-        //  if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-        //   vector2 MousePosition = GetMouse
-        //  }
-    }
-    // UnloadMusicStream(bgmMusic);
-    UnloadMusicStream(BackgroundMusic);
-    UnloadTexture(FirstBackgroundTexture);
-    UnloadTexture(NewBefore);
-    UnloadTexture(SettingBefore);
-    UnloadTexture(QuitBefore);
-    UnloadTexture(NewAfter);
-    UnloadTexture(SettingAfter);
-    UnloadTexture(QuitBefore);
-
-    CloseAudioDevice(); // Close audio context
-    CloseWindow();
-
-    return 0;
-}
-*/

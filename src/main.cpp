@@ -30,6 +30,9 @@ GameScreen currentScreen = GameScreen::MENU;
 
  //Background Load
  auto FirstBackgroundTexture= LoadTexture("resources/images/first_background.png");
+//  auto FirstBackgroundImage = LoadImage("resources/images/first_background.png");
+auto GroupTroop = LoadTexture("resources/images/characters/grouptroop.png");
+ 
  //Button Load
  auto NewBefore = LoadTexture("resources/ButtonImages/NewGameBefore.png");
  auto SettingBefore = LoadTexture("resources/ButtonImages/SettingBefore.png");
@@ -61,6 +64,8 @@ GameScreen currentScreen = GameScreen::MENU;
     ClearBackground(WHITE);
     // LoadMenu(FirstBackgroundImage);
     DrawTexture(FirstBackgroundTexture,0,0,WHITE); //Draw Background
+    DrawTexture(GroupTroop,800,500,WHITE); //Draw Background
+    
     if (exitWindowRequested){
       DrawRectangle(100, 100, screenwidth, 20, BLACK);
       DrawText("Are you sure you want to exit program? [Y/N]", 100, 450, 30, WHITE);
@@ -104,7 +109,8 @@ GameScreen currentScreen = GameScreen::MENU;
  UnloadTexture(QuitBefore);
  UnloadTexture(NewAfter);
  UnloadTexture(SettingAfter);
- UnloadTexture(QuitBefore);
+ UnloadTexture(GroupTroop);
+
 
  CloseAudioDevice();     // Close audio context
  CloseWindow();

@@ -5,7 +5,8 @@ typedef enum GameScreen
 {
     MENU = 0,
     CONV,
-    BASE
+    BASE,
+    TRANS
 } GameScreen;
 
 int main(void)
@@ -18,6 +19,7 @@ int main(void)
     GameScreen currentScreen = MENU;
 
     int framesCounter = 0; // Useful to count frames
+    int framesCounter1 = 0;
 
     SetTargetFPS(60);
 
@@ -25,7 +27,7 @@ int main(void)
     bool exitWindow = false;
     bool exitWindowRequested = false;
     float transAlpha = 0.0f;
-     bool IsHoveredNew = false;
+    bool IsHoveredNew = false;
     bool IsHoveredSetting = false;
     bool IsHoveredQuit = false;
     auto BackgroundMusic = LoadMusicStream("resources/music/WarMusic.mp3");
@@ -46,7 +48,7 @@ int main(void)
     // initialization for conv
 
     InitAudioDevice(); // initalize audio device
-    auto bgmMusic = LoadMusicStream("resources/music/scott-buckley-i-walk-with-ghosts(chosic.com).mp3");
+    auto bgmMusic = LoadMusicStream("resources/music/FirstBackgroundMusic.mp3");
     auto skyTexture = LoadTexture("resources/images/sky.png");
     auto houseImage = LoadImage("resources/images/villagehouse.png");
     ImageResize(&houseImage, GetScreenWidth(), GetScreenHeight());
@@ -65,6 +67,8 @@ int main(void)
     auto sonText = "d/f] gfd /Lof xf] ";
     SetMusicVolume(bgmMusic, 1.0f);
     PlayMusicStream(bgmMusic);
+
+    bool BaseEntered = false;
 
     // initialization for base
     auto baseTexture = LoadTexture("resources/images/villagehouse.png");
@@ -94,10 +98,21 @@ int main(void)
         break;
         case BASE:
         {
+            if(BaseEntered){
+                transAlpha+=0.005f;
+                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+                framesCounter1++;    // Count frames
+                if (framesCounter1 > 90)
+                {
+                    BaseEntered = false;
+                    framesCounter1 = 0;
+                    transAlpha = 0.0f;
+                    currentScreen = MENU;
+                }
+            }
             if (IsKeyPressed(KEY_ENTER))
             {
-                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-                currentScreen = MENU;
+                BaseEntered = true;
             }
         }
         break;
@@ -120,18 +135,16 @@ int main(void)
             else if (IsKeyPressed(KEY_N))
                 exitWindowRequested = false;
         }
-        UpdateMusicStream(BackgroundMusic);
+        UpdateMusicStream(bgmMusic);
         IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
         IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
         IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
 
-        BeginDrawing();
-        ClearBackground(WHITE);
         // LoadMenu(FirstBackgroundImage);
         DrawTexture(FirstBackgroundTexture, 0, 0, WHITE); // Draw Background
         if (exitWindowRequested)
         {
-            DrawRectangle(100, 100, screenWidth, 20, BLACK);
+            DrawCircle(100, 100, 20.0, BLACK);
             DrawText("Are you sure you want to exit program? [Y/N]", 100, 450, 30, WHITE);
         }
         if (IsHoveredNew)
@@ -175,6 +188,13 @@ int main(void)
 
         case CONV:
         {
+            if (IsKeyDown(KEY_SPACE))
+                framesCounter += 8;
+            else
+                framesCounter++;
+
+            if (IsKeyPressed(KEY_ENTER))
+                framesCounter = 0;
             UpdateMusicStream(bgmMusic);
             DrawTexture(skyTexture, 0, 0, WHITE);
             DrawTexture(houseTexture, 0, 0, WHITE);
@@ -198,6 +218,16 @@ int main(void)
 
         EndDrawing();
     }
+    UnloadMusicStream(bgmMusic);
+    UnloadTexture(FirstBackgroundTexture);
+    UnloadTexture(NewBefore);
+    UnloadTexture(SettingBefore);
+    UnloadTexture(QuitBefore);
+    UnloadTexture(NewAfter);
+    UnloadTexture(SettingAfter);
+    UnloadTexture(QuitBefore);
+
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

@@ -18,7 +18,6 @@ int main()
 
   InitAudioDevice(); // initalize audio device
   auto bgmMusic = LoadMusicStream("resources/music/scott-buckley-i-walk-with-ghosts(chosic.com).mp3");
-
   auto skyTexture = LoadTexture("resources/images/sky.png");
   auto houseImage = LoadImage("resources/images/villagehouse.png");
   ImageResize(&houseImage, GetScreenWidth(), GetScreenHeight());

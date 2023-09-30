@@ -1,4 +1,6 @@
 #include <raylib.h>
+#include <iostream>
+#include <string.h>
 
 int main()
 {
@@ -12,6 +14,7 @@ int main()
   InitWindow(screenwidth, screenHeight, "Ekikaran");
 
   Font font = LoadFont("resources/preeti.otf");
+  auto *text = LoadFileText("resources/conversation.txt");
 
   InitAudioDevice(); // initalize audio device
   auto bgmMusic = LoadMusicStream("resources/music/scott-buckley-i-walk-with-ghosts(chosic.com).mp3");
@@ -29,39 +32,81 @@ int main()
   auto speechImageForSon = LoadImage("resources/images/speechbox.png");
   ImageFlipHorizontal(&speechImageForSon);
   auto speechTextureForSon = LoadTextureFromImage(speechImageForSon);
+  auto frames = 0;
+  auto isFather = true;
+  int n = 2;
 
-  auto fatherText = "d/f] gfd /Lof xf] ";
-  auto sonText = "d/f] gfd /Lof xf] ";
+  auto text1 = "asdfg asdjf asfiuw  we9rw wow";
+  auto text2 = "qweeryy askdf asdfuw fjskad fas";
+  auto text3 = "sdfasdfh dfg sdfe asdfja";
+  auto text4 = "asuiwe jasdufai f asdfk as";
+  auto text5 = "asdf; asdfsow] aslkdfj saf";
+  auto text6 = "asd ]sdf asdf askdfj asf";
+  auto text7 = "sfmnnbcuw jse ea sldfjaf";
+  int numText = 7;
 
   SetMusicVolume(bgmMusic, 1.0f);
   PlayMusicStream(bgmMusic);
   float transAlpha = 0.0f;
+  auto textCounter = 0;
+  float fadeCounter = 0.0f;
 
   // currentScreen = GameScreen::CONV;
   while (!WindowShouldClose())
   {
+    fadeCounter += 1;
+    textCounter += 1;
     transAlpha += 0.005f;
-      if (IsKeyDown(KEY_SPACE))
-        framesCounter += 8;
-      else
-        framesCounter++;
+    if (IsKeyDown(KEY_SPACE))
+      framesCounter += 8;
+    else
+      framesCounter++;
 
-      if (IsKeyPressed(KEY_ENTER))
-        framesCounter = 0;
+    if (IsKeyPressed(KEY_ENTER))
+      framesCounter = 0;
 
-      UpdateMusicStream(bgmMusic);
-      BeginDrawing();
-      ClearBackground(WHITE);
-      DrawTexture(skyTexture, 0, 0, WHITE);
-      DrawTexture(houseTexture, 0, 0, WHITE);
-      DrawTexture(fatherTexture, -150, 150, WHITE);
-      DrawTexture(sonTexture, 1000, 350, WHITE);
-      DrawTexture(speechTextureForFather, 140, 130, WHITE);
-      DrawTexture(speechTextureForSon, 650, 350, WHITE);
-      DrawTextPro(font, TextSubtext(fatherText, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 20, 2.0, BLACK);
-      DrawTextPro(font, TextSubtext(sonText, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 20, 2.0, BLACK);
+    UpdateMusicStream(bgmMusic);
+    BeginDrawing();
+    ClearBackground(WHITE);
+    DrawTexture(skyTexture, 0, 0, WHITE);
+    DrawTexture(houseTexture, 0, 0, WHITE);
+    DrawTexture(fatherTexture, -150, 150, WHITE);
+    DrawTexture(sonTexture, 1000, 350, WHITE);
+    DrawTexture(speechTextureForFather, 140, 130, WHITE);
+    DrawTexture(speechTextureForSon, 650, 350, WHITE);
+    if (textCounter < 1000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text1, 0, framesCounter / 50), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (textCounter > 1000 * n && textCounter < 2000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text2, 0, framesCounter / 50), {740, 425}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (textCounter > 2000 * n && textCounter < 3000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text3, 0, framesCounter / 50), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (textCounter > 3000 * n && textCounter < 4000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text4, 0, framesCounter / 50), {740, 425}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (textCounter > 4000 * n && textCounter < 5000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text5, 0, framesCounter / 50), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (textCounter > 6000 * n && textCounter < 7000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text6, 0, framesCounter / 50), {740, 425}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (textCounter > 7000 * n && textCounter < 8000 * n)
+    {
+      DrawTextPro(font, TextSubtext(text7, 0, framesCounter / 50), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+    }
+    if (IsKeyPressed(KEY_ENTER))
+    {
       DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
-      EndDrawing();
+    }
+    EndDrawing();
   }
 
   UnloadMusicStream(bgmMusic);

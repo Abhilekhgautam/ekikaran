@@ -5,6 +5,7 @@ enum GameScreen{MENU, CONV, BASE};
 int main(){
 
 GameScreen currentScreen = GameScreen::MENU;
+
  int screenwidth = GetScreenWidth();
  int screenHeight = GetScreenHeight();
 
@@ -24,19 +25,18 @@ GameScreen currentScreen = GameScreen::MENU;
 
 // ToggleFullscreen();
  InitAudioDevice(); // initalize audio device
-//  auto  bgmMusic = LoadMusicStream("resources/coin.wav");
+
  auto BackgroundMusic = LoadMusicStream("resources/music/WarMusic.mp3");
- 
 
  //Background Load
- auto FirstBackgroundTexture= LoadTexture("resources/images/FirstPage.png");
+ auto FirstBackgroundTexture= LoadTexture("resources/images/first_background.png");
 //  auto FirstBackgroundImage = LoadImage("resources/images/first_background.png");
+auto GroupTroop = LoadTexture("resources/images/characters/grouptroop.png");
  
  //Button Load
  auto NewBefore = LoadTexture("resources/ButtonImages/NewGameBefore.png");
  auto SettingBefore = LoadTexture("resources/ButtonImages/SettingBefore.png");
  auto QuitBefore = LoadTexture("resources/ButtonImages/QuitBefore.png");
-
  auto NewAfter = LoadTexture("resources/ButtonImages/NewGameAfter.png");
  auto SettingAfter = LoadTexture("resources/ButtonImages/SettingAfter.png");
  auto QuitAfter = LoadTexture("resources/ButtonImages/QuitAfter.png");
@@ -47,10 +47,6 @@ GameScreen currentScreen = GameScreen::MENU;
  SetMusicVolume(BackgroundMusic,1.0f);
  PlayMusicStream(BackgroundMusic);
 
- //SetMusicVolume(bgmMusic, 1.0f);
-//  PlayMusicStream(bgmMusic);
-  // UpdateMusicStream(bgmMusic);
-//  currentScreen = GameScreen::MENU;
  while(!exitWindow && !WindowShouldClose() ){
 
   // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
@@ -68,6 +64,8 @@ GameScreen currentScreen = GameScreen::MENU;
     ClearBackground(WHITE);
     // LoadMenu(FirstBackgroundImage);
     DrawTexture(FirstBackgroundTexture,0,0,WHITE); //Draw Background
+    DrawTexture(GroupTroop,800,500,WHITE); //Draw Background
+    
     if (exitWindowRequested){
       DrawRectangle(100, 100, screenwidth, 20, BLACK);
       DrawText("Are you sure you want to exit program? [Y/N]", 100, 450, 30, WHITE);
@@ -111,7 +109,7 @@ GameScreen currentScreen = GameScreen::MENU;
  UnloadTexture(QuitBefore);
  UnloadTexture(NewAfter);
  UnloadTexture(SettingAfter);
- UnloadTexture(QuitBefore);
+ UnloadTexture(GroupTroop);
 
 
  CloseAudioDevice();     // Close audio context

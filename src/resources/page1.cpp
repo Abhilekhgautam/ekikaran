@@ -62,7 +62,7 @@ int main()
         for (int i = 0; i < numLines; ++i)
         {
             int lineY = rectY + 10 + i * (textSize + lineSpacing);
-            DrawText(textLines[i].c_str(), rectX + 10, lineY, textSize, WHITE);
+            DrawTextPro(font, textLines[i].c_str(), rectX + 10, lineY, textSize, WHITE);
         }
 
         EndDrawing();

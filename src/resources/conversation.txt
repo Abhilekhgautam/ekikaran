@@ -1,0 +1,1 @@
+This sample illustrates a text writing\nanimation effect! Check it out!

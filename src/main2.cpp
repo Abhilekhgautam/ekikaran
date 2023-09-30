@@ -49,30 +49,50 @@ int main(void)
 
     InitAudioDevice(); // initalize audio device
     auto bgmMusic = LoadMusicStream("resources/music/FirstBackgroundMusic.mp3");
-    // char *text = LoadFileText("resources/conversation.txt");
-    // DrawText(text, 100, 100, BLACK);
     auto skyTexture = LoadTexture("resources/images/sky.png");
-    auto houseImage = LoadImage("resources/images/villagehouse.png");
+    auto houseImage = LoadImage("resources/images/villagehouse(1).png");
     ImageResize(&houseImage, GetScreenWidth(), GetScreenHeight());
     auto houseTexture = LoadTextureFromImage(houseImage);
-    auto fatherImage = LoadImage("resources/characters/father.png");
+    auto fatherImage = LoadImage("resources/characters/father(1).png");
     ImageFlipHorizontal(&fatherImage);
     ImageResize(&fatherImage, 600, GetScreenHeight());
     auto fatherTexture = LoadTextureFromImage(fatherImage);
-    auto sonTexture = LoadTexture("resources/characters/son.png");
+    auto daughterTexture = LoadTexture("resources/characters/daughter(1).png");
     Font font = LoadFont("resources/preeti.otf");
     auto speechTextureForFather = LoadTexture("resources/images/speechbox.png");
-    auto speechImageForSon = LoadImage("resources/images/speechbox.png");
-    ImageFlipHorizontal(&speechImageForSon);
-    auto speechTextureForSon = LoadTextureFromImage(speechImageForSon);
+    auto speechImageForDaughter = LoadImage("resources/images/speechbox.png");
+    ImageFlipHorizontal(&speechImageForDaughter);
+    auto speechTextureForDaughter = LoadTextureFromImage(speechImageForDaughter);
     auto textCounter = 0;
-    auto text1 = "asdfg asdjf asfiuw  we9rw wow";
-    auto text2 = "qweeryy askdf asdfuw fjskad fas";
-    auto text3 = "sdfasdfh dfg sdfe asdfja";
-    auto text4 = "asuiwe jasdufai f asdfk as";
-    auto text5 = "asdf; asdfsow] aslkdfj saf";
-    auto text6 = "asd ]sdf asdf askdfj asf";
-    auto text7 = "sfmnnbcuw jse ea sldfjaf";
+    auto text1 = "s] ul//sf] 5f]/L <";
+
+    auto text2 = "u]d v]ln/sf] afaf .";
+
+    auto text3 = "s'g v]n v]ln/Psf] gfgL <";
+
+    auto text41 = ";fxl;s v]n v]ln/Psf]";
+    auto text42 = "afaf d laleGg dlg; / PlnPg";
+    auto text43 = ";Fu o'w nl8/x]sL 5' .";
+
+    auto text51 = "t];f] xf] eg] d ;Fu lg";
+    auto text52 = "Pp6f v]n 5 gfgL";
+    auto text53 = "ltdLnfO{ dg k5{ xf]nf .";
+
+    auto text6 = "s'g v]n afaf <";
+
+    auto text71 = "Plssf/0f , Pltxl;s v]nsf]";
+    auto text72 = "d}bfg xf] gfgL .";
+    auto text73 = "of] v]n Plss[T /";
+    auto text74 = "/0fflglts n8fO{+ xf] .";
+
+    auto text81 = "cf]xf]! d t xh'/sf]";
+    auto text82 = "s'/f ;'g]/ pT;lxt eP .";
+    auto text83 = "clg of] v]n s;/L";
+    auto text84 = "v]n\g] t <";
+
+    auto text91 = "nf} of] lstfa!";
+    auto text92 = "k9]/ P;s} cfwf/df";
+    auto text93 = "v]n\b} hfg] xf] gfgL";
     SetMusicVolume(bgmMusic, 1.0f);
     PlayMusicStream(bgmMusic);
 
@@ -141,7 +161,6 @@ int main(void)
         {
         case MENU:
         {
-            // if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
             if (exitWindowRequested)
             {
                 if (IsKeyPressed(KEY_Y))
@@ -213,38 +232,83 @@ int main(void)
             DrawTexture(skyTexture, 0, 0, WHITE);
             DrawTexture(houseTexture, 0, 0, WHITE);
             DrawTexture(fatherTexture, -150, 150, WHITE);
-            DrawTexture(sonTexture, 1000, 350, WHITE);
+            DrawTexture(daughterTexture, 1000, 400, WHITE);
             DrawTexture(speechTextureForFather, 140, 130, WHITE);
-            DrawTexture(speechTextureForSon, 650, 350, WHITE);
-            // DrawTextPro(font, TextSubtext(fatherText, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 20, 2.0, BLACK);
-            // DrawTextPro(font, TextSubtext(sonText, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 20, 2.0, BLACK);
-            if (textCounter < 1000)
+            DrawTexture(speechTextureForDaughter, 740, 350, WHITE);
+            if (textCounter < 400)
             {
-                DrawTextPro(font, TextSubtext(text1, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text1, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font, text1, {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
             }
-            else if (textCounter > 1000 && textCounter < 2000)
+            else if (textCounter > 400 && textCounter < 800)
             {
-                DrawTextPro(font, TextSubtext(text2, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 30, 2.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text2, 0, framesCounter / 40), {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font,text2, {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
             }
-            else if (textCounter > 2000 && textCounter < 3000)
+            else if (textCounter > 800 && textCounter < 1200)
             {
-                DrawTextPro(font, TextSubtext(text3, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text3, 0, framesCounter / 80), {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font, text3, {250, 200}, {0, 0}, 0, 30, 1.0, BLACK);
             }
-            else if (textCounter > 3000 && textCounter < 4000)
+            else if (textCounter > 1200 && textCounter < 1800)
             {
-                DrawTextPro(font, TextSubtext(text4, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 30, 2.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text41, 0, framesCounter / 60), {850, 400}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text42, 0, framesCounter / 60), {850, 425}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text43, 0, framesCounter / 60), {850, 450}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text41, {850, 400}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text42, {850, 425}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text43, {850, 450}, {0, 0}, 0, 25, 1.0, BLACK);
             }
-            else if (textCounter > 4000 && textCounter < 5000)
+            else if (textCounter > 1800 && textCounter < 2400)
             {
-                DrawTextPro(font, TextSubtext(text5, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+                DrawTextPro(font, text51, {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text52, {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text53, {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text51, 0, framesCounter / 10), {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text52, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text53, 0, framesCounter / 10), {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
             }
-            else if (textCounter > 6000 && textCounter < 7000)
+            else if (textCounter > 2400 && textCounter < 2800)
             {
-                DrawTextPro(font, TextSubtext(text6, 0, framesCounter / 10), {740, 425}, {0, 0}, 0, 30, 2.0, BLACK);
+                DrawTextPro(font, text6, {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text6, 0, framesCounter / 10), {850, 425}, {0, 0}, 0, 30, 1.0, BLACK);
+            }
+            else if (textCounter > 2800 && textCounter < 3200)
+            {
+                DrawTextPro(font, text71, {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font, text72, {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text71, 0, framesCounter / 10), {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text72, 0, framesCounter / 10), {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
+            }
+            else if (textCounter > 3200 && textCounter < 3600)
+            {
+                DrawTextPro(font, text73, {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font, text74, {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text73, 0, framesCounter / 10), {250, 185}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text74, 0, framesCounter / 10), {250, 210}, {0, 0}, 0, 30, 1.0, BLACK);
+            }
+            else if (textCounter > 3600 && textCounter < 4000)
+            {
+                DrawTextPro(font, text81, {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font, text82, {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text81, 0, framesCounter / 10), {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text82, 0, framesCounter / 10), {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
+            }
+            else if (textCounter > 4000 && textCounter < 4400)
+            {
+                DrawTextPro(font, text83, {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
+                DrawTextPro(font, text84, {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text83, 0, framesCounter / 10), {850, 415}, {0, 0}, 0, 30, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text84, 0, framesCounter / 10), {850, 440}, {0, 0}, 0, 30, 1.0, BLACK);
             }
             else
             {
-                DrawTextPro(font, TextSubtext(text7, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 30, 2.0, BLACK);
+                DrawTextPro(font, text91, {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text92, {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
+                DrawTextPro(font, text93, {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text91, 0, framesCounter / 10), {250, 175}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text92, 0, framesCounter / 10), {250, 200}, {0, 0}, 0, 25, 1.0, BLACK);
+                // DrawTextPro(font, TextSubtext(text93, 0, framesCounter / 10), {250, 225}, {0, 0}, 0, 25, 1.0, BLACK);
             }
             if (IsKeyPressed(KEY_ENTER))
             {
@@ -272,6 +336,19 @@ int main(void)
     UnloadTexture(NewAfter);
     UnloadTexture(SettingAfter);
     UnloadTexture(QuitBefore);
+
+    UnloadTexture(skyTexture);
+    UnloadImage(houseImage);
+    UnloadTexture(houseTexture);
+    UnloadImage(fatherImage);
+    UnloadTexture(fatherTexture);
+    UnloadTexture(daughterTexture);
+    UnloadFont(font);
+    UnloadTexture(speechTextureForFather);
+    UnloadImage(speechImageForDaughter);
+    UnloadTexture(speechTextureForDaughter);
+
+    UnloadTexture(baseTexture);
 
     CloseAudioDevice();
     CloseWindow();

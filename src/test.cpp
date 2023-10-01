@@ -17,7 +17,7 @@ public:
   {
     if (this->isButton)
     {
-      DrawRectangle(x, y, this->width, this->height, WHITE);
+      // DrawRectangle(x, y, this->width, this->height, WHITE);
       DrawTexture(texture, x, y, WHITE);
     }
     else
@@ -73,8 +73,8 @@ public:
     }
     // we will add a castle at the center of the the base
     BaseItem attackButton;
-    attackButton.texture = LoadTexture("./resources/ButtonImages/NewGameBefore.png");
-    attackButton.x = GetScreenWidth()/2 + 400;
+    attackButton.texture = LoadTexture("./resources/ButtonImages/attack.png");
+    attackButton.x = GetScreenWidth() / 2 + 400;
     attackButton.y = -40;
     attackButton.isDraggable = false;
     attackButton.isObstacle = false;
@@ -260,8 +260,6 @@ public:
         */
   }
   std::vector<BaseItem> items;
-  void update() {}
-  void refresh() {}
   void draw()
   {
     for (auto &elt : items)
@@ -337,76 +335,88 @@ public:
     }
   }
 
-    BaseItem *lastDraggedItem = nullptr;
-    void button_clicked()
-    {
-      for (auto &e : items)
-      {
-        // isHovered = CheckCollisionPointRec(GetMousePosition(), {e.x, e.y, e.x + e.width, e.y + e.height});
-        if (e.isButton && GetMouseX() >= e.x && GetMouseX() <= (e.x + e.texture.width) && GetMouseY() >= e.y && GetMouseY() <= (e.y + e.texture.height) && IsMouseButtonDown(0))
-        {
-          e.isBeingDragged = true;
-          lastDraggedItem = &e;
-          DrawText("Collision", 100, 100, 23, RED);
-          e.drag(GetMouseX() - e.texture.width / 2, GetMouseY() - e.texture.height / 2);
-        }
-      }
-      if (IsMouseButtonReleased(0))
-      {
-        BaseItem newItem;
-        newItem.width = lastDraggedItem->width;         // Set your desired width
-        newItem.height = lastDraggedItem->height;        // Set your desired height
-        newItem.texture = lastDraggedItem->texture; // Load your item's texture
-        newItem.drag(lastDraggedItem->x, lastDraggedItem->y);
-        // items.emplace_back(newItem);
-      }
-    }
-
-
- /*
-  BaseItem *lastDraggedItem = nullptr;
-  void button_clicked()
+  void click_attack()
   {
     for (auto &e : items)
     {
-      if (e.isBeingDragged)
+      if (e.isClickable)
       {
-        DrawText("Dragging", 100, 100, 23, RED);
-        // e.drag(GetMouseX() - e.width / 2, GetMouseY() - e.height / 2);
-        lastDraggedItem = &e;
-      }
-      else
-      {
-        e.isBeingDragged = false; // Stop dragging when the mouse button is released
-      }
+        isHovered = CheckCollisionPointRec(GetMousePosition(), {e.x, e.y, e.x + e.width, e.y + e.height});
+        if(isHovered){
+          if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 
-      if (GetMouseX() >= e.x && GetMouseX() <= (e.x + e.width) && GetMouseY() >= e.y && GetMouseY() <= (e.y + e.height) && IsMouseButtonDown(0))
-      {
-        e.isBeingDragged = true; // Start dragging if the mouse is over the item and the button is pressed
-        DrawText("Collision", 100, 100, 23, RED);
-        e.drag(GetMouseX() - e.width / 2, GetMouseY() - e.height / 2);
-        lastDraggedItem = &e;
-      }
-      if (IsMouseButtonReleased(0))
-      {
-        BaseItem newItem;
-        newItem.width = 100;  // Set your desired width
-        newItem.height = 100; // Set your desired height
-        if (lastDraggedItem)
-        {
-          newItem.x = lastDraggedItem->x;
-          newItem.y = lastDraggedItem->y;
-          newItem.texture = lastDraggedItem->texture; // Use the texture of the last dragged item
-          newItem.drag(GetMouseX() - newItem.width / 2, GetMouseY() - newItem.height / 2);
-          items.emplace_back(newItem);
         }
       }
     }
   }
-  */
-}
 
-;
+  // BaseItem *lastDraggedItem = nullptr ;
+  bool button_clicked()
+  {
+    for (auto &e : items)
+    {
+      // isHovered = CheckCollisionPointRec(GetMousePosition(), {e.x, e.y, e.x + e.width, e.y + e.height});
+      //   if (e.isButton && GetMouseX() >= e.x && GetMouseX() <= (e.x + e.texture.width) && GetMouseY() >= e.y && GetMouseY() <= (e.y + e.texture.height) && IsMouseButtonDown(0))
+      //   {
+      //     e.isBeingDragged = true;
+      //     lastDraggedItem = &e;
+      //     e.drag(GetMouseX() - e.texture.width / 2, GetMouseY() - e.texture.height / 2);
+      //   }
+      // }
+      // if (IsMouseButtonReleased(0))
+      // {
+      //   BaseItem newItem;
+      //   newItem.width = lastDraggedItem->width;         // Set your desired width
+      //   newItem.height = lastDraggedItem->height;
+      //   newItem.texture = lastDraggedItem->texture;
+      //   newItem.drag(lastDraggedItem->x, lastDraggedItem->y);
+      //   // items.emplace_back(newItem);
+      // }
+    }
+  }
+
+  /*
+   BaseItem *lastDraggedItem = nullptr;
+   void button_clicked()
+   {
+     for (auto &e : items)
+     {
+       if (e.isBeingDragged)
+       {
+         DrawText("Dragging", 100, 100, 23, RED);
+         // e.drag(GetMouseX() - e.width / 2, GetMouseY() - e.height / 2);
+         lastDraggedItem = &e;
+       }
+       else
+       {
+         e.isBeingDragged = false; // Stop dragging when the mouse button is released
+       }
+
+       if (GetMouseX() >= e.x && GetMouseX() <= (e.x + e.width) && GetMouseY() >= e.y && GetMouseY() <= (e.y + e.height) && IsMouseButtonDown(0))
+       {
+         e.isBeingDragged = true; // Start dragging if the mouse is over the item and the button is pressed
+         DrawText("Collision", 100, 100, 23, RED);
+         e.drag(GetMouseX() - e.width / 2, GetMouseY() - e.height / 2);
+         lastDraggedItem = &e;
+       }
+       if (IsMouseButtonReleased(0))
+       {
+         BaseItem newItem;
+         newItem.width = 100;  // Set your desired width
+         newItem.height = 100; // Set your desired height
+         if (lastDraggedItem)
+         {
+           newItem.x = lastDraggedItem->x;
+           newItem.y = lastDraggedItem->y;
+           newItem.texture = lastDraggedItem->texture; // Use the texture of the last dragged item
+           newItem.drag(GetMouseX() - newItem.width / 2, GetMouseY() - newItem.height / 2);
+           items.emplace_back(newItem);
+         }
+       }
+     }
+   }
+   */
+};
 
 int main()
 {
@@ -420,6 +430,7 @@ int main()
     ClearBackground(WHITE);
     my_base.draw();
     my_base.poll_drag();
+    my_base.click_attack();
     my_base.button_clicked();
     // DrawLineEx({0, 620}, {GetScreenWidth(), 620}, 2, BLACK);
     EndDrawing();

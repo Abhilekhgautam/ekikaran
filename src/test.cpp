@@ -17,7 +17,7 @@ public:
   {
     if (this->isButton)
     {
-      DrawRectangle(x, y, this->width, this->height, WHITE);
+      // DrawRectangle(x, y, this->width, this->height, WHITE);
       DrawTexture(texture, x, y, WHITE);
     }
     else
@@ -260,8 +260,6 @@ public:
         */
   }
   std::vector<BaseItem> items;
-  void update() {}
-  void refresh() {}
   void draw()
   {
     for (auto &elt : items)
@@ -337,7 +335,7 @@ public:
     }
   }
 
-    BaseItem *lastDraggedItem = nullptr;
+    BaseItem *lastDraggedItem = nullptr ;
     void button_clicked()
     {
       for (auto &e : items)
@@ -347,7 +345,6 @@ public:
         {
           e.isBeingDragged = true;
           lastDraggedItem = &e;
-          DrawText("Collision", 100, 100, 23, RED);
           e.drag(GetMouseX() - e.texture.width / 2, GetMouseY() - e.texture.height / 2);
         }
       }
@@ -355,8 +352,8 @@ public:
       {
         BaseItem newItem;
         newItem.width = lastDraggedItem->width;         // Set your desired width
-        newItem.height = lastDraggedItem->height;        // Set your desired height
-        newItem.texture = lastDraggedItem->texture; // Load your item's texture
+        newItem.height = lastDraggedItem->height;
+        newItem.texture = lastDraggedItem->texture;
         newItem.drag(lastDraggedItem->x, lastDraggedItem->y);
         // items.emplace_back(newItem);
       }
@@ -404,9 +401,8 @@ public:
     }
   }
   */
-}
+};
 
-;
 
 int main()
 {

@@ -17,10 +17,10 @@ int main()
   InitAudioDevice(); // initalize audio device
   auto bgmMusic = LoadMusicStream("resources/music/scott-buckley-i-walk-with-ghosts(chosic.com).mp3");
   auto skyTexture = LoadTexture("resources/images/sky.png");
-  auto KPImage = LoadImage("resources/images/characters/kalupandey.png");
+  auto KPImage = LoadImage("resources/images/characters/kalupandey1.png");
   ImageResize(&KPImage, 1500, 750);
   auto KPTexture = LoadTextureFromImage(KPImage);
-  auto PNSImage = LoadImage("resources/images/characters/PNSedited.png");
+  auto PNSImage = LoadImage("resources/images/characters/PNSedited(1).png");
   ImageFlipHorizontal(&PNSImage);
   ImageResize(&PNSImage, GetScreenWidth(), GetScreenHeight()-100);
   auto PNSTexture = LoadTextureFromImage(PNSImage);
@@ -82,8 +82,8 @@ int main()
     BeginDrawing();
     ClearBackground(WHITE);
     DrawTexture(skyTexture, 0, 0, WHITE);
-    DrawTexture(PNSTexture, -500, 200, WHITE);
-    DrawTexture(KPTexture, 170, 200, WHITE);
+    DrawTexture(PNSTexture, -790, 220, WHITE);
+    DrawTexture(KPTexture, -100, 0, WHITE);
     DrawTexture(speechTextureForPNS, 130, 190, WHITE);
     DrawTexture(speechTextureForKP, 650, 230, WHITE);
     if (textCounter < 300)

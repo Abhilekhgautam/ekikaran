@@ -24,6 +24,8 @@ int main(void)
     int framesCounter1 = 0;
 
     SetTargetFPS(60);
+    InitAudioDevice(); // initalize audio device
+
 
     // initialization for menu
     bool exitWindow = false;
@@ -32,7 +34,9 @@ int main(void)
     bool IsHoveredNew = false;
     bool IsHoveredSetting = false;
     bool IsHoveredQuit = false;
-    auto BackgroundMusic = LoadMusicStream("resources/music/WarMusic.mp3");
+    auto warMusic = LoadMusicStream("./resources/music/WarMusic.mp3");
+    SetMusicVolume(warMusic, 2.0f);
+    PlayMusicStream(warMusic);
 
     // Background Load
     auto FirstBackgroundImage = LoadImage("resources/images/first_background-transformed.png");
@@ -51,8 +55,7 @@ int main(void)
 
     // initialization for conv
 
-    InitAudioDevice(); // initalize audio device
-    auto bgmMusic = LoadMusicStream("resources/music/FirstBackgroundMusic.mp3");
+    auto backgroundMusic = LoadMusicStream("resources/music/FirstBackgroundMusic.mp3");
     auto skyTexture = LoadTexture("resources/images/sky.png");
     auto houseImage = LoadImage("resources/images/villagehouse(1).png");
     ImageResize(&houseImage, GetScreenWidth(), GetScreenHeight());
@@ -98,8 +101,6 @@ int main(void)
     auto convText91 = "nf} of] lstfa!";
     auto convText92 = "k9]/ P;s} cfwf/df";
     auto convText93 = "v]n\b} hfg] xf] gfgL";
-    SetMusicVolume(bgmMusic, 1.0f);
-    PlayMusicStream(bgmMusic);
 
     bool BaseEntered = false;
     bool MenuEntered = false;
@@ -109,10 +110,11 @@ int main(void)
     bool Entered = false;
 
     // initialization for strategy
-    auto KPImage = LoadImage("resources/images/characters/kalupandey.png");
+    auto conversationMusic = LoadMusicStream("resources/music/ConversationMusic.mp3") ;
+    auto KPImage = LoadImage("resources/images/characters/kalupandey1.png");
     ImageResize(&KPImage, 1500, 750);
     auto KPTexture = LoadTextureFromImage(KPImage);
-    auto PNSImage = LoadImage("resources/images/characters/PNSedited.png");
+    auto PNSImage = LoadImage("resources/images/characters/PNSedited(1).png");
     ImageFlipHorizontal(&PNSImage);
     ImageResize(&PNSImage, GetScreenWidth(), GetScreenHeight() - 100);
     auto PNSTexture = LoadTextureFromImage(PNSImage);
@@ -139,7 +141,6 @@ int main(void)
     auto strategyText44 = "aft{nfa klg uGo{f  5'";
 
     // initialization for read
-    bool isFather = false;
     // Load text File
     //  const char *text = LoadFileText("resources/conversation.txt");
     // const char text[] = "This sample illustrates a text writing\nanimation effect! Check it out!";
@@ -188,7 +189,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
                 else if (IsKeyPressed(KEY_N))
                     exitWindowRequested = false;
             }
-            UpdateMusicStream(bgmMusic);
+            UpdateMusicStream(warMusic);
             IsHoveredNew = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 165), 220, 85});
             IsHoveredSetting = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 - 15), 220, 85});
             IsHoveredQuit = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)(GetScreenWidth() / 2 - 65), (float)(GetScreenHeight() / 2 + 135), 220, 85});
@@ -239,6 +240,8 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
             }
             if (Entered)
             {
+                PauseMusicStream(warMusic);
+                PlayMusicStream(backgroundMusic);
                 transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
                 framesCounter1++; // Count frames
@@ -258,7 +261,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
         {
             if (IsKeyPressed(KEY_ENTER))
                 Entered = true;
-            UpdateMusicStream(bgmMusic);
+            UpdateMusicStream(backgroundMusic);
             DrawTexture(skyTexture, 0, 0, WHITE);
             DrawTexture(houseTexture, 0, 0, WHITE);
             DrawTexture(fatherTexture, -150, 150, WHITE);
@@ -323,7 +326,9 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
 
             if (Entered)
             {
-                transAlpha += 0.005f;
+                PauseMusicStream(backgroundMusic);
+                PlayMusicStream(conversationMusic);
+                    transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
                 framesCounter1++; // Count frames
                 if (framesCounter1 > 105)
@@ -339,10 +344,11 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
 
         case READ:
         {
-            DrawTexture(skyTexture, 0, 0, WHITE);
+            UpdateMusicStream(conversationMusic);
+                DrawTexture(skyTexture, 0, 0, WHITE);
 
             // DrawText(TextSubtext(text, 0, framesCounter / 10), 210, 190, 20, BLACK);
-            DrawTextPro(font, TextSubtext(text, 0, framesCounter / 10),{10, 190},{0,0},0, 25,1.0, BLACK);
+            DrawTextPro(font, TextSubtext(text, 0, framesCounter / 10), {10, 190}, {0, 0}, 0, 25, 1.0, BLACK);
 
             // DrawText(TextSubtext(text, 0, framesCounter/30), 210, 2200, 20, BLACK);
             // DrawText(TextSubtext(text, 0, framesCounter/40), 210, 250, 20, BLACK);
@@ -354,6 +360,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
             }
             if (Entered)
             {
+                PauseMusicStream(conversationMusic);
                 transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
                 framesCounter1++; // Count frames
@@ -386,11 +393,11 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
             // {
             //     Entered = false;
             // }
-            UpdateMusicStream(bgmMusic);
+            UpdateMusicStream(backgroundMusic);
             BeginDrawing();
             ClearBackground(WHITE);
             DrawTexture(skyTexture, 0, 0, WHITE);
-            DrawTexture(PNSTexture, -500, 200, WHITE);
+            DrawTexture(PNSTexture, -800, 200, WHITE);
             DrawTexture(KPTexture, 170, 200, WHITE);
             DrawTexture(speechTextureForPNS, 130, 190, WHITE);
             DrawTexture(speechTextureForKP, 650, 230, WHITE);
@@ -431,6 +438,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
             }
             if (Entered)
             {
+                PauseMusicStream(backgroundMusic);
                 transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
                 framesCounter1++; // Count frames
@@ -447,6 +455,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
 
         case BASE:
         {
+            UpdateMusicStream(warMusic);
             DrawTexture(baseTexture, 0, 0, WHITE);
             if (IsKeyPressed(KEY_ENTER))
             {
@@ -455,6 +464,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
             }
             if (Entered)
             {
+                PauseMusicStream(warMusic);
                 transAlpha += 0.005f;
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
                 framesCounter1++; // Count frames
@@ -474,7 +484,7 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
 
         EndDrawing();
     }
-    UnloadMusicStream(bgmMusic);
+    // UnloadMusicStream(bgmMusic);
     UnloadTexture(FirstBackgroundTexture);
     UnloadTexture(NewBefore);
     UnloadTexture(SettingBefore);
@@ -482,6 +492,9 @@ pgsf] a'af g/e'kfn zfxsf] d[To' !&&( @% r}tdf  ePkl5 pgL uf]/vfsf /fhf eP .k[YjL
     UnloadTexture(NewAfter);
     UnloadTexture(SettingAfter);
     UnloadTexture(QuitBefore);
+    UnloadMusicStream(warMusic);
+    UnloadMusicStream(backgroundMusic);
+    UnloadMusicStream(conversationMusic);
 
     UnloadTexture(skyTexture);
     UnloadImage(houseImage);
